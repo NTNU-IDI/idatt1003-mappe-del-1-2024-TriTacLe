@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Name, getName, as key and Item object as the value
+ * Name, getName, as key, and Item object as the value
  */
 public class FoodStorage {
     private HashMap<String, Item> items;
@@ -92,9 +92,26 @@ public class FoodStorage {
      * prints out all expired items plus how much it costs
      * @return
      */
-    public ArrayList printExpiredItems(){
-        ArrayList<Item> expiredItems = new ArrayList<Item>();
-        double totalValue = 0;
+    public void getExpiredItems(){
+        //ArrayList<Item> expiredItems = new ArrayList<Item>();
+        //double totalValue = 0;
+        List<Item> expiredItems = items.values().stream()
+                .filter(item -> item.getExpirationDate().isBefore(LocalDate.now()))
+                .collect(Collectors.toList());
+        if (expiredItems.isEmpty()){
+            System.out.println("No items is expired! Nice!");
+            return;
+        }
+
+        double totalValue = expiredItems.stream()
+                //.filter(item -> item.getExpirationDate().isBefore(LocalDate.now()))
+                .mapToDouble(Item::getPerUnitPrice)
+                .sum();
+        System.out.println("Expired items");
+        expiredItems.forEach(System.out::println);
+        System.out.printf("Total cost of expired items: %.3f kr%n", totalValue); //3 desimaler
+
+        /*
         for (Item item : items.values()) {
             if (item.getExpirationDate().isBefore(LocalDate.now())){
                 expiredItems.add(item);
@@ -105,6 +122,7 @@ public class FoodStorage {
         }
         System.out.println("Total cost for the expired items: " + totalValue + " kr");
         return expiredItems;
+         */
     }
 
     /**
@@ -119,12 +137,33 @@ public class FoodStorage {
         expiredItems.forEach(System.out::println);
     }
 
-    public double totalValue(){
-        double value = 0;
-        for (Item item : items.values()) {
-            value += item.getPerUnitPrice();
+    /**
+     * Prints out total value. Checks if storage is empty
+     */
+    public void totalValue(){
+        if(items.isEmpty()){
+            System.out.println("Food storage is empty");
+            return;
         }
-        return value;
+        double totalValue = items.values().stream()
+                .mapToDouble(Item::getPerUnitPrice)
+                .sum();
+        System.out.println("The total value of the food storage is: " + totalValue + " kr");
+    }
+
+    /**
+     * Method that sorts out the items map alphabetically by name using streams sorted method
+     */
+    public void sortAlphabetically(){
+        System.out.println("Food storage sorted out alphabetically by name:");
+        items.values().stream()
+                .sorted(Comparator.comparing(Item::getName))
+                .forEach(System.out::println);
+        /*
+        items.keySet().stream()
+                .sorted(Comparator.comparing(String::toString))
+                .forEach(System.out::println);
+         */
     }
 
     /**
