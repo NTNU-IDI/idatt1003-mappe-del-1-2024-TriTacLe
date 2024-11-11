@@ -77,7 +77,7 @@ public class TestKlient {
 
         cookingBook.suggestionRecipe(fridge);
 
-        //Test del 2
+        //Test del
         FoodStorage foodStorage = new FoodStorage();
         foodStorage.addItem(new Item("Mel", 2000, "gram", LocalDate.of(2028, 2, 19), 30));
         foodStorage.addItem(new Item("Eple", 2, "Stykker", LocalDate.of(2000, 12, 15), 20));
@@ -87,6 +87,9 @@ public class TestKlient {
 
         System.out.println(foodStorage.toString());
 
+        foodStorage.getExpiredItems();
         foodStorage.getExpiredItemsBeforeDate(LocalDate.of(2026,4,30));
+        foodStorage.totalValue();
+        foodStorage.sortAlphabetically();
     }
 }
