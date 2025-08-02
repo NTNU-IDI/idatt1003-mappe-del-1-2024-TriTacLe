@@ -2,7 +2,7 @@
 
 STUDENT NAME = "Tri Tac Le"  
 STUDENT ID = "10082"
-
+Grade: A
 ---
 
 # Project Description
