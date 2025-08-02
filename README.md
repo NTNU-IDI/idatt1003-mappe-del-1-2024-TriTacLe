@@ -1,7 +1,7 @@
 # Portfolio Project - IDATT1003
 
 STUDENT NAME = "Tri Tac Le"  
-STUDENT ID = "10082"
+STUDENT ID = "10082"  
 Grade: A
 ---
 
